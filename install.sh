@@ -142,7 +142,7 @@ echo 'monoeci.conf created'
 cd
 wget https://github.com/monacocoin-net/monoeci-core/releases/download/0.12.2.3/monoeciCore-0.12.2.3-linux64-cli.Ubuntu16.04.tar.gz
 sudo tar xvf monoeciCore-0.12.2.3-linux64-cli.Ubuntu16.04.tar.gz
-sudo rm dinerocore-1.0.1.0-linux64.tar.gz
+sudo rm monoeciCore-0.12.2.3-linux64-cli.Ubuntu16.04.tar.gz
 sudo cp monoecid /usr/bin/ && rm -fr monoecid 
 sudo cp monoeci-cli /usr/bin/ && rm -fr monoeci-cli 
 sudo cp monoeci-tx /usr/bin/ && rm -fr monoeci-tx 
