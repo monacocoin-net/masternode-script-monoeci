@@ -121,7 +121,7 @@ decho "Setting up monoeci Core"
 user=`pwgen -s 16 1`
 password=`pwgen -s 64 1`
 
-sudo -H -u monoeci bash -c 'mkdir -p /home/$whoami/.monoeciCore/'
+sudo -H -u $whoami bash -c 'mkdir -p /home/$whoami/.monoeciCore/'
 cat << EOF > /home/$whoami/.monoeciCore/monoeci.conf
 rpcuser='$user'
 rpcpassword='$password'
@@ -159,14 +159,14 @@ decho "Setting up sentinel"
 
 #Install Sentinel
 sudo apt-get install -y git python-virtualenv
-sudo -H -u monoeci bash -c 'git clone https://github.com/monacocoin-net/sentinel.git /home/$whoami/sentinel'
+sudo -H -u $whoami bash -c 'git clone https://github.com/monacocoin-net/sentinel.git /home/$whoami/sentinel'
 cd /home/$whoami/sentinel
-sudo -H -u monoeci bash -c 'virtualenv ./venv'
-sudo -H -u monoeci bash -c './venv/bin/pip install -r requirements.txt'
+sudo -H -u $whoami bash -c 'virtualenv ./venv'
+sudo -H -u $whoami bash -c './venv/bin/pip install -r requirements.txt'
 
 #Starting coin
-sudo -H -u monoeci bash -c "(crontab -l 2>/dev/null; echo '@reboot sleep 30 && monoecid') | crontab"
-sudo -H -u monoeci bash -c "(crontab -l 2>/dev/null; echo '* * * * * cd /home/$whoami/sentinel && ./venv/bin/python bin/sentinel.py >/$') | crontab"
+sudo -H -u $whoami bash -c "(crontab -l 2>/dev/null; echo '@reboot sleep 30 && monoecid') | crontab"
+sudo -H -u $whoami bash -c "(crontab -l 2>/dev/null; echo '* * * * * cd /home/$whoami/sentinel && ./venv/bin/python bin/sentinel.py >/$') | crontab"
 
 decho "Starting your masternode"
 echo "Now, you need to finally start your masternode in the following order: "
