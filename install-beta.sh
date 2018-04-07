@@ -116,16 +116,15 @@ if ![ getent passwd $whoami > /dev/null 2>&1 ]; then
     sudo adduser --disabled-password --gecos "" $whoami
 fi
 
-su $whoami
-cd
+bash -c 'su - $whoami'
 #Create monoeci.conf
-decho "Setting up monoeci Core" 
+decho "Settin up monoeci Core" 
 #Generating Random Passwords
 user=`pwgen -s 16 1`
 password=`pwgen -s 64 1`
 
 
-mkdir -p .monoeciCore
+bash -c 'mkdir -p .monoeciCore'
 cat << EOF > .monoeciCore/monoeci.conf
 rpcuser='$user'
 rpcpassword='$password'
@@ -138,15 +137,15 @@ masternode=1
 masternodeprivkey='$key'
 externalip='$ip'
 EOF
-sudo chmod 0755 .monoeciCore/monoeci.conf
+bash -c 'sudo chmod 0755 .monoeciCore/monoeci.conf'
 
 echo 'monoeci.conf created'
 
 #Install Monoeci Daemon
-cd
+
 wget https://github.com/monacocoin-net/monoeci-core/releases/download/0.12.2.3/monoeciCore-0.12.2.3-linux64-cli.Ubuntu16.04.tar.gz
-sudo tar xvf monoeciCore-0.12.2.3-linux64-cli.Ubuntu16.04.tar.gz
-sudo rm monoeciCore-0.12.2.3-linux64-cli.Ubuntu16.04.tar.gz
+tar xvf monoeciCore-0.12.2.3-linux64-cli.Ubuntu16.04.tar.gz
+rm monoeciCore-0.12.2.3-linux64-cli.Ubuntu16.04.tar.gz
 sudo cp monoecid /usr/bin/ && rm -fr monoecid 
 sudo cp monoeci-cli /usr/bin/ && rm -fr monoeci-cli 
 sudo cp monoeci-tx /usr/bin/ && rm -fr monoeci-tx 
