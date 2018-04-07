@@ -2,7 +2,8 @@
 
 ################################################
 # Script by François YoYae GINESTE - 03/04/2018
-# For monoeciCore V0.12.2
+# 	 by Freetrax - 07/04/2018
+# For monoeciCore V0.12.2.3
 # https://monoeci.io/tutorial-masternode/
 ################################################
 
