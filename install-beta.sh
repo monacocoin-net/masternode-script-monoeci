@@ -116,14 +116,17 @@ if ![ getent passwd $whoami > /dev/null 2>&1 ]; then
     sudo adduser --disabled-password --gecos "" $whoami
 fi
 
+su $whoami
+cd
 #Create monoeci.conf
 decho "Setting up monoeci Core" 
 #Generating Random Passwords
 user=`pwgen -s 16 1`
 password=`pwgen -s 64 1`
 
-sudo -H -u $whoami bash -c 'mkdir -p /home/$whoami/.monoeciCore/'
-cat << EOF > /home/$whoami/.monoeciCore/monoeci.conf
+
+mkdir -p .monoeciCore
+cat << EOF > .monoeciCore/monoeci.conf
 rpcuser='$user'
 rpcpassword='$password'
 rpcallowip=127.0.0.1
@@ -135,11 +138,11 @@ masternode=1
 masternodeprivkey='$key'
 externalip='$ip'
 EOF
-sudo chmod 0755 /home/$whoami/.monoeciCore/monoeci.conf
+sudo chmod 0755 .monoeciCore/monoeci.conf
 
 echo 'monoeci.conf created'
 
-#Install Dinero Daemon
+#Install Monoeci Daemon
 cd
 wget https://github.com/monacocoin-net/monoeci-core/releases/download/0.12.2.3/monoeciCore-0.12.2.3-linux64-cli.Ubuntu16.04.tar.gz
 sudo tar xvf monoeciCore-0.12.2.3-linux64-cli.Ubuntu16.04.tar.gz
@@ -148,11 +151,19 @@ sudo cp monoecid /usr/bin/ && rm -fr monoecid
 sudo cp monoeci-cli /usr/bin/ && rm -fr monoeci-cli 
 sudo cp monoeci-tx /usr/bin/ && rm -fr monoeci-tx 
 
-sudo -H -u $whoami bash -c 'monoecid'
+monoecid
 
-echo 'Monoeci Core prepared and lunched'
-
-sleep 10
+echo 'Monoeci Core prepared and lunchd - Waiting 10s'
+echo '*'
+sleep 2
+echo '***'
+sleep 2
+echo '*****'
+sleep 2
+echo '******'
+sleep 2
+echo '********'
+sleep 2
 
 #Setting up coin
 
@@ -160,14 +171,17 @@ decho "Setting up sentinel"
 
 #Install Sentinel
 sudo apt-get install -y git python-virtualenv
-sudo -H -u $whoami bash -c 'git clone https://github.com/monacocoin-net/sentinel.git /home/$whoami/sentinel'
-cd /home/$whoami/sentinel
-sudo -H -u $whoami bash -c 'virtualenv ./venv'
-sudo -H -u $whoami bash -c './venv/bin/pip install -r requirements.txt'
+git clone https://github.com/monacocoin-net/sentinel.git && cd sentinel/
+
+virtualenv ./venv
+./venv/bin/pip install -r requirements.txt
+
+decho "Sentinel Configuration test"
+./venv/bin/py.test ./test
 
 #Starting coin
-sudo -H -u $whoami bash -c "(crontab -l 2>/dev/null; echo '@reboot sleep 30 && monoecid') | crontab"
-sudo -H -u $whoami bash -c "(crontab -l 2>/dev/null; echo '* * * * * cd /home/$whoami/sentinel && ./venv/bin/python bin/sentinel.py >/$') | crontab"
+bash -c "(crontab -l 2>/dev/null; echo '@reboot sleep 30 && monoecid') | crontab"
+bash -c "(crontab -l 2>/dev/null; echo '* * * * * cd /home/$whoami/sentinel && ./venv/bin/python bin/sentinel.py >/$') | crontab"
 
 decho "Starting your masternode"
 echo "Now, you need to finally start your masternode in the following order: "
@@ -176,4 +190,4 @@ echo "Select the newly created masternode and then click on start-alias."
 echo "Once completed please return to VPS and wait for the wallet to be synced."
 echo "Then you can try the command 'monoeci-cli masternode status' to get the masternode status."
 
-su $whoami
+
