@@ -27,7 +27,7 @@ systemctl --version >/dev/null 2>&1 || { decho "systemd is required. Are you usi
 #print variable on a screen
 decho "Make sure you double check before hitting enter !"
 
-read -e -p "User that will run Monoeci core " whoami
+read -e -p "User that will run Monoeci core : " whoami
 if [[ "$whoami" == "" ]]; then
     decho "WARNING: No user entered, exiting !!!"
     exit 3
