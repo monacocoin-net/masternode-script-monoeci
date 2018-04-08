@@ -138,7 +138,7 @@ sudo chmod 0755 /home/$whoami/.monoeciCore/monoeci.conf
 
 echo 'monoeci.conf created'
 
-#Install Dinero Daemon
+#Install Moneoci Daemon
 cd
 wget https://github.com/monacocoin-net/monoeci-core/releases/download/0.12.2.3/monoeciCore-0.12.2.3-linux64-cli.Ubuntu16.04.tar.gz
 sudo tar xvf monoeciCore-0.12.2.3-linux64-cli.Ubuntu16.04.tar.gz
