@@ -2,7 +2,7 @@
 
 ################################################
 # Script by François YoYae GINESTE - 03/04/2018
-# For monoeciCore V0.12.2
+# For monoeciCore V0.12.2.3
 # https://monoeci.io/tutorial-masternode/
 ################################################
 
@@ -121,7 +121,7 @@ decho "Setting up monoeci Core"
 user=`pwgen -s 16 1`
 password=`pwgen -s 64 1`
 
-sudo -H -u $whoami bash -c 'mkdir -p /home/$whoami/.monoeciCore/'
+mkdir -p /home/$whoami/.monoeciCore/
 cat << EOF > /home/$whoami/.monoeciCore/monoeci.conf
 rpcuser='$user'
 rpcpassword='$password'
@@ -134,7 +134,7 @@ masternode=1
 masternodeprivkey='$key'
 externalip='$ip'
 EOF
-sudo chmod 0755 /home/$whoami/.monoeciCore/monoeci.conf
+sudo chown -R $whoami /home/$whoami/*
 
 echo 'monoeci.conf created'
 
@@ -147,6 +147,7 @@ sudo cp monoecid /usr/bin/ && rm -fr monoecid
 sudo cp monoeci-cli /usr/bin/ && rm -fr monoeci-cli 
 sudo cp monoeci-tx /usr/bin/ && rm -fr monoeci-tx 
 
+#Run monoecid as selected user
 sudo -H -u $whoami bash -c 'monoecid'
 
 echo 'Monoeci Core prepared and lunched'
@@ -159,14 +160,18 @@ decho "Setting up sentinel"
 
 #Install Sentinel
 sudo apt-get install -y git python-virtualenv
-sudo -H -u $whoami bash -c 'git clone https://github.com/monacocoin-net/sentinel.git /home/$whoami/sentinel'
+git clone https://github.com/monacocoin-net/sentinel.git /home/$whoami/sentinel
+sudo chown -R $whoami /home/$whoami/sentinel/*
+
 cd /home/$whoami/sentinel
 sudo -H -u $whoami bash -c 'virtualenv ./venv'
 sudo -H -u $whoami bash -c './venv/bin/pip install -r requirements.txt'
 
-#Starting coin
-sudo -H -u $whoami bash -c "(crontab -l 2>/dev/null; echo '@reboot sleep 30 && monoecid') | crontab"
-sudo -H -u $whoami bash -c "(crontab -l 2>/dev/null; echo '* * * * * cd /home/$whoami/sentinel && ./venv/bin/python bin/sentinel.py >/$') | crontab"
+#Setup crontab
+echo '@reboot sleep 30 && monoecid' >> newCrontab
+echo '* * * * * cd /home/$whoami/sentinel && ./venv/bin/python bin/sentinel.py >/dev/null 2>&1' >> newCrontab
+crontab -u $whoami newCrontab
+rm newCrontab
 
 decho "Starting your masternode"
 echo "Now, you need to finally start your masternode in the following order: "
