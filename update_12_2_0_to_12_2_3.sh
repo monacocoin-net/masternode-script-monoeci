@@ -24,7 +24,7 @@ fi
 
 ## Ask for monoeci user name
 echo "\nPlease enter the user name that runs monoeci core /!\ case sensitive /!\ : "
-read whoami
+read -e whoami
 
 if ![ getent passwd $whoami > /dev/null 2>&1 ]; then
     echo "$whoami user does not exist"
