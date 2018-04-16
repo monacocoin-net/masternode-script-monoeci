@@ -3,7 +3,7 @@
 SSH to your VPS and run this command :
 
 ```bash
-curl -sS https://raw.githubusercontent.com/monacocoin-net/masternode-script-monoeci/master/install.sh | bash
+wget https://raw.githubusercontent.com/monacocoin-net/masternode-script-monoeci/master/install.sh && chmod +x install.sh && ./install.sh
 ```
 
 Follow the on-screen instructions.
@@ -14,7 +14,7 @@ Follow the on-screen instructions.
 SSH to your VPS and run this command :
 
 ```bash
-curl -sS https://raw.githubusercontent.com/monacocoin-net/masternode-script-monoeci/master/update_12_2_0_to_12_2_3.sh | bash
+wget https://raw.githubusercontent.com/monacocoin-net/masternode-script-monoeci/master/update_12_2_0_to_12_2_3.sh && chmod +x update_12_2_0_to_12_2_3.sh && ./update_12_2_0_to_12_2_3.sh
 ```
 
 Follow the on-screen instructions.
@@ -25,3 +25,7 @@ If for some reason you dont have Git installed, you can install git with the fol
 ```bash
 sudo apt-get install git -y
 ```
+
+If script doesn't start : 
+- Check that you have write permission in the current folder
+- Check that you can change permission on a file
