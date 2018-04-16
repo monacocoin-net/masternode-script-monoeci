@@ -23,7 +23,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 ## Ask for monoeci user name
-echo "\nPlease enter the user name that runs monoeci core /!\ case sensitive /!\ : "
+echo -e "\nPlease enter the user name that runs monoeci core /!\ case sensitive /!\ : "
 read -e whoami
 
 if ![ getent passwd $whoami > /dev/null 2>&1 ]; then
