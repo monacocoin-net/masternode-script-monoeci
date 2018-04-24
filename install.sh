@@ -183,10 +183,11 @@ crontab -u $whoami newCrontab >> $LOG_FILE 2>&1
 rm newCrontab >> $LOG_FILE 2>&1
 
 decho "Starting your masternode"
+echo ""
 echo "Now, you need to finally start your masternode in the following order: "
-echo "Go to your windows/mac wallet and modify masternode.conf as required, then restart and from the Masternode tab"
-echo "Select the newly created masternode and then click on start-alias."
-echo "Once completed please return to VPS and wait for the wallet to be synced."
-echo "Then you can try the command 'monoeci-cli masternode status' to get the masternode status."
+echo "1- Go to your windows/mac wallet and modify masternode.conf as required, then restart and from the Masternode tab"
+echo "2- Select the newly created masternode and then click on start-alias."
+echo "3- Once completed, please return to VPS and wait for the wallet to be synced."
+echo "4- Then you can try the command 'monoeci-cli masternode status' to get the masternode status."
 
 su $whoami
