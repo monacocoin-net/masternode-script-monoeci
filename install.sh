@@ -132,16 +132,16 @@ password=`pwgen -s 64 1`
 
 mkdir -p /home/$whoami/.monoeciCore/
 cat << EOF > /home/$whoami/.monoeciCore/monoeci.conf
-rpcuser='$user'
-rpcpassword='$password'
+rpcuser=$user
+rpcpassword=$password
 rpcallowip=127.0.0.1
 listen=1
 server=1
 daemon=1
 maxconnections=24
 masternode=1
-masternodeprivkey='$key'
-externalip='$ip'
+masternodeprivkey=$key
+externalip=$ip
 EOF
 sudo chown -R $whoami:$whoami /home/$whoami
 
