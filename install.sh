@@ -142,7 +142,7 @@ masternode=1
 masternodeprivkey='$key'
 externalip='$ip'
 EOF
-sudo chown -R $whoami /home/$whoami/*
+sudo chown -R $whoami:$whoami /home/$whoami/*
 
 echo 'monoeci.conf created'
 
