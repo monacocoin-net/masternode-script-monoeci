@@ -71,7 +71,7 @@ shopt -s extglob >> $LOG_FILE 2>&1
 rm -rf !(monoeci.conf) >> $LOG_FILE 2>&1
 
 #relunch core
-decho "Relunching monoeci core"
+decho "Relaunching monoeci core"
 sudo -H -u $whoami bash -c 'monoecid' >> $LOG_FILE 2>&1
 
 ## Update sentinel
