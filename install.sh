@@ -119,8 +119,9 @@ if [[ ("$UFW" == "y" || "$UFW" == "Y" || "$UFW" == "") ]]; then
 fi
 
 #Create user (if necessary)
-if ![ getent passwd $whoami > /dev/null 2>&1 ]; then
-    sudo adduser --disabled-password --gecos "" $whoami >> $LOG_FILE 2>&1
+getent passwd $whoami > /dev/null 2&>1
+if [ $? -ne 0 ]; then
+	sudo adduser --disabled-password --gecos "" $whoami >> $LOG_FILE 2>&1
 fi
 
 #Create monoeci.conf
@@ -142,7 +143,7 @@ masternode=1
 masternodeprivkey='$key'
 externalip='$ip'
 EOF
-sudo chown -R $whoami:$whoami /home/$whoami/*
+sudo chown -R $whoami:$whoami /home/$whoami
 
 echo 'monoeci.conf created'
 
@@ -168,15 +169,15 @@ decho "Setting up sentinel"
 
 #Install Sentinel
 git clone https://github.com/monacocoin-net/sentinel.git /home/$whoami/sentinel >> $LOG_FILE 2>&1
-sudo chown -R $whoami /home/$whoami/sentinel/* >> $LOG_FILE 2>&1
+sudo chown -R $whoami:$whoami /home/$whoami/sentinel >> $LOG_FILE 2>&1
 
 cd /home/$whoami/sentinel
 sudo -H -u $whoami bash -c 'virtualenv ./venv' >> $LOG_FILE 2>&1
 sudo -H -u $whoami bash -c './venv/bin/pip install -r requirements.txt' >> $LOG_FILE 2>&1
 
 #Setup crontab
-echo '@reboot sleep 30 && monoecid' >> newCrontab
-echo '* * * * * cd /home/$whoami/sentinel && ./venv/bin/python bin/sentinel.py >/dev/null 2>&1' >> newCrontab
+echo "@reboot sleep 30 && monoecid" >> newCrontab
+echo "* * * * * cd /home/$whoami/sentinel && ./venv/bin/python bin/sentinel.py >/dev/null 2>&1" >> newCrontab
 crontab -u $whoami newCrontab >> $LOG_FILE 2>&1
 rm newCrontab >> $LOG_FILE 2>&1
 
