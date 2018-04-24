@@ -13,6 +13,7 @@ cat <<'FIG'
 | |\/| |/ _ \| '_ \ / _ \ / _ \/ __| |
 | |  | | (_) | | | | (_) |  __/ (__| |
 |_|  |_|\___/|_| |_|\___/ \___|\___|_|
+
 FIG
 
 echo -e "\nStarting Monoeci masternode update. This will take a few minutes...\n"
@@ -28,7 +29,9 @@ fi
 ## Ask for monoeci user name
 read -e -p "Please enter the user name that runs Monoeci core /!\ case sensitive /!\ : " whoami
 
-if ![ getent passwd $whoami > /dev/null 2>&1 ]; then
+## Check if monoeci user exist
+getent passwd $whoami > /dev/null 2&>1
+if [ $? -ne 0 ]; then
 	echo "$whoami user does not exist"
 	exit 3
 fi
