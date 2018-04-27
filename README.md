@@ -1,6 +1,18 @@
-## Installation
+## Installation script :
 
-SSH to your VPS and run this command :
+Installation script required to be deployed on Linux Ubuntu 16.04.
+
+The script has been tested for the following VPS provider :
+
+| Provider | Test |
+| :---: | :---: |
+| OVH  | OK |
+| Scaleway  | OK |
+| Vultr  | Not tested |
+
+VPS provider are configuring Linux core in their own way that can cause error in script. Please reports if you test it on another provider listed above.
+
+To launch the installation, connect to your VPS via SSH and run this command :
 
 ```bash
 wget https://raw.githubusercontent.com/monacocoin-net/masternode-script-monoeci/master/install.sh && chmod +x install.sh && ./install.sh
@@ -9,9 +21,11 @@ wget https://raw.githubusercontent.com/monacocoin-net/masternode-script-monoeci/
 Follow the on-screen instructions.
 
 
+---
+
 ## Update script (from 0.12.2.0 to 0.12.2.3)
 
-SSH to your VPS and run this command :
+To launch the installation, connect to your VPS via SSH and run this command :
 
 ```bash
 wget https://raw.githubusercontent.com/monacocoin-net/masternode-script-monoeci/master/update_12_2_0_to_12_2_3.sh && chmod +x update_12_2_0_to_12_2_3.sh && ./update_12_2_0_to_12_2_3.sh
@@ -19,6 +33,8 @@ wget https://raw.githubusercontent.com/monacocoin-net/masternode-script-monoeci/
 
 Follow the on-screen instructions.
 
+
+---
 ## Error troubleshooting : 
 If for some reason you dont have Git installed, you can install git with the following command:
 
