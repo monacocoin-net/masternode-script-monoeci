@@ -1,10 +1,10 @@
 ## Installation script :
 
-Installation script required to be deployed on Linux Ubuntu 16.04.
+Installation script is build for Linux Ubuntu 16.04.
 
 The script has been tested for the following VPS provider :
 
-| Provider | Test |
+| Provider | Result |
 | :---: | :---: |
 | OVH  | OK |
 | Scaleway  | OK |
