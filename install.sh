@@ -73,32 +73,32 @@ sudo apt-get -y update >> $LOG_FILE 2>&1
 # Install required packages
 decho "Installing base packages and dependencies..."
 
-sudo apt-get -y install \
-	wget \
-	git \
-	unzip \
-	libevent-dev \
-	libboost-dev \
-	libboost-chrono-dev \
-	libboost-filesystem-dev \
-	libboost-program-options-dev \
-	libboost-system-dev \
-	libboost-test-dev \
-	libboost-thread-dev \
-	libdb4.8-dev \
-	libdb4.8++-dev \
-	libminiupnpc-dev \
-	build-essential \
-	libtool \
-	autotools-dev \
-	automake \
-	pkg-config \
-	libssl-dev \
-	libevent-dev \
-	bsdmainutils \
-	libzmq3-dev \
-	virtualenv \
-	pwgen >> $LOG_FILE 2>&1
+sudo apt-get -y install >> $LOG_FILE 2>&1
+sudo apt-get -y wget >> $LOG_FILE 2>&1
+sudo apt-get -y git >> $LOG_FILE 2>&1
+sudo apt-get -y unzip >> $LOG_FILE 2>&1
+sudo apt-get -y libevent-dev >> $LOG_FILE 2>&1
+sudo apt-get -y libboost-dev >> $LOG_FILE 2>&1
+sudo apt-get -y libboost-chrono-dev >> $LOG_FILE 2>&1
+sudo apt-get -y libboost-filesystem-dev >> $LOG_FILE 2>&1
+sudo apt-get -y libboost-program-options-dev >> $LOG_FILE 2>&1
+sudo apt-get -y libboost-system-dev >> $LOG_FILE 2>&1
+sudo apt-get -y libboost-test-dev >> $LOG_FILE 2>&1
+sudo apt-get -y libboost-thread-dev >> $LOG_FILE 2>&1
+sudo apt-get -y libdb4.8-dev >> $LOG_FILE 2>&1
+sudo apt-get -y libdb4.8++-dev >> $LOG_FILE 2>&1
+sudo apt-get -y libminiupnpc-dev >> $LOG_FILE 2>&1
+sudo apt-get -y build-essential >> $LOG_FILE 2>&1
+sudo apt-get -y libtool >> $LOG_FILE 2>&1
+sudo apt-get -y autotools-dev >> $LOG_FILE 2>&1
+sudo apt-get -y automake >> $LOG_FILE 2>&1
+sudo apt-get -y pkg-config >> $LOG_FILE 2>&1
+sudo apt-get -y libssl-dev >> $LOG_FILE 2>&1
+sudo apt-get -y libevent-dev >> $LOG_FILE 2>&1
+sudo apt-get -y bsdmainutils >> $LOG_FILE 2>&1
+sudo apt-get -y libzmq3-dev >> $LOG_FILE 2>&1
+sudo apt-get -y virtualenv >> $LOG_FILE 2>&1
+sudo apt-get -y pwgen >> $LOG_FILE 2>&1
 
 decho "Optional installs (fail2ban and ufw)"
 if [[ ("$install_fail2ban" == "y" || "$install_fail2ban" == "Y" || "$install_fail2ban" == "") ]]; then
@@ -109,14 +109,14 @@ if [[ ("$install_fail2ban" == "y" || "$install_fail2ban" == "Y" || "$install_fai
 fi
 
 if [[ ("$UFW" == "y" || "$UFW" == "Y" || "$UFW" == "") ]]; then
-	sudo apt-get install ufw >> $LOG_FILE 2>&1
+	sudo apt-get -y install ufw >> $LOG_FILE 2>&1
 	sudo ufw default deny incoming >> $LOG_FILE 2>&1
 	sudo ufw default allow outgoing >> $LOG_FILE 2>&1
 	sudo ufw allow ssh/tcp >> $LOG_FILE 2>&1
 	sudo ufw allow sftp/tcp >> $LOG_FILE 2>&1
 	sudo ufw allow 24157/tcp >> $LOG_FILE 2>&1
 	sudo ufw logging on >> $LOG_FILE 2>&1
-	sudo ufw enable -y >> $LOG_FILE 2>&1
+	sudo ufw enable >> $LOG_FILE 2>&1
 fi
 
 #Create user (if necessary)
