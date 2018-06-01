@@ -6,7 +6,7 @@
 # https://monoeci.io/tutorial-masternode/
 ################################################
 
-LOG_FILE=install.log
+LOG_FILE=/tmp/install.log
 
 decho () {
   echo `date +"%H:%M:%S"` $1

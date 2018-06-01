@@ -1,6 +1,12 @@
 #!/bin/bash
 
-LOG_FILE=update.log
+################################################
+# Script by François YoYae GINESTE - 03/04/2018
+# For Monoeci
+# https://monoeci.io/
+################################################
+
+LOG_FILE=/tmp/update.log
 
 decho () {
   echo `date +"%H:%M:%S"` $1
