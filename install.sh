@@ -73,32 +73,31 @@ sudo apt-get -y update >> $LOG_FILE 2>&1
 # Install required packages
 decho "Installing base packages and dependencies..."
 
-sudo apt-get -y install >> $LOG_FILE 2>&1
-sudo apt-get -y wget >> $LOG_FILE 2>&1
-sudo apt-get -y git >> $LOG_FILE 2>&1
-sudo apt-get -y unzip >> $LOG_FILE 2>&1
-sudo apt-get -y libevent-dev >> $LOG_FILE 2>&1
-sudo apt-get -y libboost-dev >> $LOG_FILE 2>&1
-sudo apt-get -y libboost-chrono-dev >> $LOG_FILE 2>&1
-sudo apt-get -y libboost-filesystem-dev >> $LOG_FILE 2>&1
-sudo apt-get -y libboost-program-options-dev >> $LOG_FILE 2>&1
-sudo apt-get -y libboost-system-dev >> $LOG_FILE 2>&1
-sudo apt-get -y libboost-test-dev >> $LOG_FILE 2>&1
-sudo apt-get -y libboost-thread-dev >> $LOG_FILE 2>&1
-sudo apt-get -y libdb4.8-dev >> $LOG_FILE 2>&1
-sudo apt-get -y libdb4.8++-dev >> $LOG_FILE 2>&1
-sudo apt-get -y libminiupnpc-dev >> $LOG_FILE 2>&1
-sudo apt-get -y build-essential >> $LOG_FILE 2>&1
-sudo apt-get -y libtool >> $LOG_FILE 2>&1
-sudo apt-get -y autotools-dev >> $LOG_FILE 2>&1
-sudo apt-get -y automake >> $LOG_FILE 2>&1
-sudo apt-get -y pkg-config >> $LOG_FILE 2>&1
-sudo apt-get -y libssl-dev >> $LOG_FILE 2>&1
-sudo apt-get -y libevent-dev >> $LOG_FILE 2>&1
-sudo apt-get -y bsdmainutils >> $LOG_FILE 2>&1
-sudo apt-get -y libzmq3-dev >> $LOG_FILE 2>&1
-sudo apt-get -y virtualenv >> $LOG_FILE 2>&1
-sudo apt-get -y pwgen >> $LOG_FILE 2>&1
+sudo apt-get -y install wget >> $LOG_FILE 2>&1
+sudo apt-get -y install git >> $LOG_FILE 2>&1
+sudo apt-get -y install unzip >> $LOG_FILE 2>&1
+sudo apt-get -y install libevent-dev >> $LOG_FILE 2>&1
+sudo apt-get -y install libboost-dev >> $LOG_FILE 2>&1
+sudo apt-get -y install libboost-chrono-dev >> $LOG_FILE 2>&1
+sudo apt-get -y install libboost-filesystem-dev >> $LOG_FILE 2>&1
+sudo apt-get -y install libboost-program-options-dev >> $LOG_FILE 2>&1
+sudo apt-get -y install libboost-system-dev >> $LOG_FILE 2>&1
+sudo apt-get -y install libboost-test-dev >> $LOG_FILE 2>&1
+sudo apt-get -y install libboost-thread-dev >> $LOG_FILE 2>&1
+sudo apt-get -y install libdb4.8-dev >> $LOG_FILE 2>&1
+sudo apt-get -y install libdb4.8++-dev >> $LOG_FILE 2>&1
+sudo apt-get -y install libminiupnpc-dev >> $LOG_FILE 2>&1
+sudo apt-get -y install build-essential >> $LOG_FILE 2>&1
+sudo apt-get -y install libtool >> $LOG_FILE 2>&1
+sudo apt-get -y install autotools-dev >> $LOG_FILE 2>&1
+sudo apt-get -y install automake >> $LOG_FILE 2>&1
+sudo apt-get -y install pkg-config >> $LOG_FILE 2>&1
+sudo apt-get -y install libssl-dev >> $LOG_FILE 2>&1
+sudo apt-get -y install libevent-dev >> $LOG_FILE 2>&1
+sudo apt-get -y install bsdmainutils >> $LOG_FILE 2>&1
+sudo apt-get -y install libzmq3-dev >> $LOG_FILE 2>&1
+sudo apt-get -y install virtualenv >> $LOG_FILE 2>&1
+sudo apt-get -y install pwgen >> $LOG_FILE 2>&1
 
 decho "Optional installs (fail2ban and ufw)"
 if [[ ("$install_fail2ban" == "y" || "$install_fail2ban" == "Y" || "$install_fail2ban" == "") ]]; then
