@@ -69,16 +69,6 @@ fi
 
 cd $path
 
-cp -R .monoeciCore "monoeciCore_"`date '+%Y-%m-%d_%H:%M:%S'` >> $LOG_FILE 2>&1
-
-## Remove old configuration
-decho "Removing old configuration file (except monoeci.conf)"
-
-cd $path/.monoeciCore
-
-shopt -s extglob >> $LOG_FILE 2>&1
-rm -rf !(monoeci.conf) >> $LOG_FILE 2>&1
-
 #relunch core
 decho "Relaunching monoeci core"
 sudo -H -u $whoami bash -c 'monoecid' >> $LOG_FILE 2>&1
