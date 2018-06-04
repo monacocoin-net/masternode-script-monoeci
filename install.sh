@@ -116,7 +116,7 @@ if [[ ("$UFW" == "y" || "$UFW" == "Y" || "$UFW" == "") ]]; then
 	sudo ufw default deny incoming >> $LOG_FILE 2>&1
 	sudo ufw default allow outgoing >> $LOG_FILE 2>&1
 	sudo ufw logging on >> $LOG_FILE 2>&1
-	sudo ufw enable --force >> $LOG_FILE 2>&1
+	sudo ufw --force enable >> $LOG_FILE 2>&1
 fi
 
 #Create user (if necessary)
