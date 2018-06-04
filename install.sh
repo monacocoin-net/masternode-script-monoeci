@@ -110,13 +110,13 @@ fi
 
 if [[ ("$UFW" == "y" || "$UFW" == "Y" || "$UFW" == "") ]]; then
 	sudo apt-get -y install ufw >> $LOG_FILE 2>&1
-	sudo ufw default deny incoming >> $LOG_FILE 2>&1
-	sudo ufw default allow outgoing >> $LOG_FILE 2>&1
 	sudo ufw allow ssh/tcp >> $LOG_FILE 2>&1
 	sudo ufw allow sftp/tcp >> $LOG_FILE 2>&1
 	sudo ufw allow 24157/tcp >> $LOG_FILE 2>&1
+	sudo ufw default deny incoming >> $LOG_FILE 2>&1
+	sudo ufw default allow outgoing >> $LOG_FILE 2>&1
 	sudo ufw logging on >> $LOG_FILE 2>&1
-	sudo ufw enable >> $LOG_FILE 2>&1
+	sudo ufw enable --force >> $LOG_FILE 2>&1
 fi
 
 #Create user (if necessary)
