@@ -85,6 +85,7 @@ sudo apt-get -y install wget >> $LOG_FILE 2>&1
 sudo apt-get -y install git >> $LOG_FILE 2>&1
 sudo apt-get -y install unzip >> $LOG_FILE 2>&1
 sudo apt-get -y install virtualenv >> $LOG_FILE 2>&1
+sudo apt-get -y install python-virtualenv >> $LOG_FILE 2>&1
 sudo apt-get -y install pwgen >> $LOG_FILE 2>&1
 
 if [[ ("$install_fail2ban" == "y" || "$install_fail2ban" == "Y" || "$install_fail2ban" == "") ]]; then
