@@ -13,6 +13,15 @@ decho () {
   echo `date +"%H:%M:%S"` $1 >> $LOG_FILE
 }
 
+error() {
+  local parent_lineno="$1"
+  local message="$2"
+  local code="${3:-1}"
+  echo "Error on or near line ${parent_lineno}; exiting with status ${code}"
+  exit "${code}"
+}
+trap 'error ${LINENO}' ERR
+
 clear
 
 cat <<'FIG'
@@ -62,7 +71,6 @@ decho "Updating system and installing required packages."
 
 # update package and upgrade Ubuntu
 sudo apt-get -y update >> $LOG_FILE 2>&1
-sudo apt-get -y upgrade >> $LOG_FILE 2>&1
 # Add Berkely PPA
 decho "Installing bitcoin PPA..."
 
@@ -76,31 +84,11 @@ decho "Installing base packages and dependencies..."
 sudo apt-get -y install wget >> $LOG_FILE 2>&1
 sudo apt-get -y install git >> $LOG_FILE 2>&1
 sudo apt-get -y install unzip >> $LOG_FILE 2>&1
-sudo apt-get -y install libevent-dev >> $LOG_FILE 2>&1
-sudo apt-get -y install libboost-dev >> $LOG_FILE 2>&1
-sudo apt-get -y install libboost-chrono-dev >> $LOG_FILE 2>&1
-sudo apt-get -y install libboost-filesystem-dev >> $LOG_FILE 2>&1
-sudo apt-get -y install libboost-program-options-dev >> $LOG_FILE 2>&1
-sudo apt-get -y install libboost-system-dev >> $LOG_FILE 2>&1
-sudo apt-get -y install libboost-test-dev >> $LOG_FILE 2>&1
-sudo apt-get -y install libboost-thread-dev >> $LOG_FILE 2>&1
-sudo apt-get -y install libdb4.8-dev >> $LOG_FILE 2>&1
-sudo apt-get -y install libdb4.8++-dev >> $LOG_FILE 2>&1
-sudo apt-get -y install libminiupnpc-dev >> $LOG_FILE 2>&1
-sudo apt-get -y install build-essential >> $LOG_FILE 2>&1
-sudo apt-get -y install libtool >> $LOG_FILE 2>&1
-sudo apt-get -y install autotools-dev >> $LOG_FILE 2>&1
-sudo apt-get -y install automake >> $LOG_FILE 2>&1
-sudo apt-get -y install pkg-config >> $LOG_FILE 2>&1
-sudo apt-get -y install libssl-dev >> $LOG_FILE 2>&1
-sudo apt-get -y install libevent-dev >> $LOG_FILE 2>&1
-sudo apt-get -y install bsdmainutils >> $LOG_FILE 2>&1
-sudo apt-get -y install libzmq3-dev >> $LOG_FILE 2>&1
 sudo apt-get -y install virtualenv >> $LOG_FILE 2>&1
 sudo apt-get -y install pwgen >> $LOG_FILE 2>&1
 
-decho "Optional installs (fail2ban and ufw)"
 if [[ ("$install_fail2ban" == "y" || "$install_fail2ban" == "Y" || "$install_fail2ban" == "") ]]; then
+	decho "Optional installs : fail2ban"
 	cd ~
 	sudo apt-get -y install fail2ban >> $LOG_FILE 2>&1
 	sudo systemctl enable fail2ban >> $LOG_FILE 2>&1
@@ -108,6 +96,7 @@ if [[ ("$install_fail2ban" == "y" || "$install_fail2ban" == "Y" || "$install_fai
 fi
 
 if [[ ("$UFW" == "y" || "$UFW" == "Y" || "$UFW" == "") ]]; then
+	decho "Optional installs : ufw"
 	sudo apt-get -y install ufw >> $LOG_FILE 2>&1
 	sudo ufw allow ssh/tcp >> $LOG_FILE 2>&1
 	sudo ufw allow sftp/tcp >> $LOG_FILE 2>&1
@@ -119,10 +108,16 @@ if [[ ("$UFW" == "y" || "$UFW" == "Y" || "$UFW" == "") ]]; then
 	sudo ufw --force enable >> $LOG_FILE 2>&1
 fi
 
-#Create user (if necessary)
+decho "Create user $whoami (if necessary)"
+#desactivate trap only for this command
+trap '' ERR
 getent passwd $whoami > /dev/null 2&>1
+
 if [ $? -ne 0 ]; then
+	trap 'error ${LINENO}' ERR
 	sudo adduser --disabled-password --gecos "" $whoami >> $LOG_FILE 2>&1
+else
+	trap 'error ${LINENO}' ERR
 fi
 
 #Create monoeci.conf
@@ -131,6 +126,7 @@ decho "Setting up monoeci Core"
 user=`pwgen -s 16 1`
 password=`pwgen -s 64 1`
 
+echo 'Creating monoeci.conf...'
 mkdir -p /home/$whoami/.monoeciCore/
 cat << EOF > /home/$whoami/.monoeciCore/monoeci.conf
 rpcuser=$user
@@ -146,9 +142,8 @@ externalip=$ip
 EOF
 sudo chown -R $whoami:$whoami /home/$whoami
 
-echo 'monoeci.conf created'
-
 #Install Moneoci Daemon
+echo 'Downloading daemon...'
 cd
 wget https://github.com/monacocoin-net/monoeci-core/releases/download/v0.12.2.3/monoeciCore-0.12.2.3-linux64.tar.gz >> $LOG_FILE 2>&1
 sudo tar xvzf monoeciCore-0.12.2.3-linux64.tar.gz >> $LOG_FILE 2>&1
@@ -168,11 +163,13 @@ sleep 10
 
 decho "Setting up sentinel"
 
+echo 'Downloading sentinel...'
 #Install Sentinel
 git clone https://github.com/monacocoin-net/sentinel.git /home/$whoami/sentinel >> $LOG_FILE 2>&1
 sudo chown -R $whoami:$whoami /home/$whoami/sentinel >> $LOG_FILE 2>&1
 
 cd /home/$whoami/sentinel
+echo 'Setting up dependencies...'
 sudo -H -u $whoami bash -c 'virtualenv ./venv' >> $LOG_FILE 2>&1
 sudo -H -u $whoami bash -c './venv/bin/pip install -r requirements.txt' >> $LOG_FILE 2>&1
 
