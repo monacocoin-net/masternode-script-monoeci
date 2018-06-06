@@ -70,43 +70,44 @@ read -e -p "(Optional) Install UFW and configure ports? (Recommended) [Y/n] : " 
 decho "Updating system and installing required packages."   
 
 # update package and upgrade Ubuntu
-sudo apt-get -y update >> $LOG_FILE 2>&1
+apt-get -y update >> $LOG_FILE 2>&1
 # Add Berkely PPA
 decho "Installing bitcoin PPA..."
 
-sudo apt-get -y install software-properties-common >> $LOG_FILE 2>&1
-sudo apt-add-repository -y ppa:bitcoin/bitcoin >> $LOG_FILE 2>&1
-sudo apt-get -y update >> $LOG_FILE 2>&1
+apt-get -y install software-properties-common >> $LOG_FILE 2>&1
+apt-add-repository -y ppa:bitcoin/bitcoin >> $LOG_FILE 2>&1
+apt-get -y update >> $LOG_FILE 2>&1
 
 # Install required packages
 decho "Installing base packages and dependencies..."
 
-sudo apt-get -y install wget >> $LOG_FILE 2>&1
-sudo apt-get -y install git >> $LOG_FILE 2>&1
-sudo apt-get -y install unzip >> $LOG_FILE 2>&1
-sudo apt-get -y install virtualenv >> $LOG_FILE 2>&1
-sudo apt-get -y install python-virtualenv >> $LOG_FILE 2>&1
-sudo apt-get -y install pwgen >> $LOG_FILE 2>&1
+apt-get -y install sudo >> $LOG_FILE 2>&1
+apt-get -y install wget >> $LOG_FILE 2>&1
+apt-get -y install git >> $LOG_FILE 2>&1
+apt-get -y install unzip >> $LOG_FILE 2>&1
+apt-get -y install virtualenv >> $LOG_FILE 2>&1
+apt-get -y install python-virtualenv >> $LOG_FILE 2>&1
+apt-get -y install pwgen >> $LOG_FILE 2>&1
 
 if [[ ("$install_fail2ban" == "y" || "$install_fail2ban" == "Y" || "$install_fail2ban" == "") ]]; then
 	decho "Optional installs : fail2ban"
 	cd ~
-	sudo apt-get -y install fail2ban >> $LOG_FILE 2>&1
-	sudo systemctl enable fail2ban >> $LOG_FILE 2>&1
-	sudo systemctl start fail2ban >> $LOG_FILE 2>&1
+	apt-get -y install fail2ban >> $LOG_FILE 2>&1
+	systemctl enable fail2ban >> $LOG_FILE 2>&1
+	systemctl start fail2ban >> $LOG_FILE 2>&1
 fi
 
 if [[ ("$UFW" == "y" || "$UFW" == "Y" || "$UFW" == "") ]]; then
 	decho "Optional installs : ufw"
-	sudo apt-get -y install ufw >> $LOG_FILE 2>&1
-	sudo ufw allow ssh/tcp >> $LOG_FILE 2>&1
-	sudo ufw allow sftp/tcp >> $LOG_FILE 2>&1
-	sudo ufw allow 24156/tcp >> $LOG_FILE 2>&1
-	sudo ufw allow 24157/tcp >> $LOG_FILE 2>&1
-	sudo ufw default deny incoming >> $LOG_FILE 2>&1
-	sudo ufw default allow outgoing >> $LOG_FILE 2>&1
-	sudo ufw logging on >> $LOG_FILE 2>&1
-	sudo ufw --force enable >> $LOG_FILE 2>&1
+	apt-get -y install ufw >> $LOG_FILE 2>&1
+	ufw allow ssh/tcp >> $LOG_FILE 2>&1
+	ufw allow sftp/tcp >> $LOG_FILE 2>&1
+	ufw allow 24156/tcp >> $LOG_FILE 2>&1
+	ufw allow 24157/tcp >> $LOG_FILE 2>&1
+	ufw default deny incoming >> $LOG_FILE 2>&1
+	ufw default allow outgoing >> $LOG_FILE 2>&1
+	ufw logging on >> $LOG_FILE 2>&1
+	ufw --force enable >> $LOG_FILE 2>&1
 fi
 
 decho "Create user $whoami (if necessary)"
@@ -116,7 +117,7 @@ getent passwd $whoami > /dev/null 2&>1
 
 if [ $? -ne 0 ]; then
 	trap 'error ${LINENO}' ERR
-	sudo adduser --disabled-password --gecos "" $whoami >> $LOG_FILE 2>&1
+	adduser --disabled-password --gecos "" $whoami >> $LOG_FILE 2>&1
 else
 	trap 'error ${LINENO}' ERR
 fi
@@ -141,16 +142,16 @@ masternode=1
 masternodeprivkey=$key
 externalip=$ip
 EOF
-sudo chown -R $whoami:$whoami /home/$whoami
+chown -R $whoami:$whoami /home/$whoami
 
 #Install Moneoci Daemon
 echo 'Downloading daemon...'
 cd
 wget https://github.com/monacocoin-net/monoeci-core/releases/download/v0.12.2.3/monoeciCore-0.12.2.3-linux64.tar.gz >> $LOG_FILE 2>&1
-sudo tar xvzf monoeciCore-0.12.2.3-linux64.tar.gz >> $LOG_FILE 2>&1
-sudo cp monoeciCore-0.12.2/bin/monoecid /usr/bin/ >> $LOG_FILE 2>&1
-sudo cp monoeciCore-0.12.2/bin/monoeci-cli /usr/bin/ >> $LOG_FILE 2>&1
-sudo cp monoeciCore-0.12.2/bin/monoeci-tx /usr/bin/ >> $LOG_FILE 2>&1
+tar xvzf monoeciCore-0.12.2.3-linux64.tar.gz >> $LOG_FILE 2>&1
+cp monoeciCore-0.12.2/bin/monoecid /usr/bin/ >> $LOG_FILE 2>&1
+cp monoeciCore-0.12.2/bin/monoeci-cli /usr/bin/ >> $LOG_FILE 2>&1
+cp monoeciCore-0.12.2/bin/monoeci-tx /usr/bin/ >> $LOG_FILE 2>&1
 rm -rf monoeciCore-0.12.2 >> $LOG_FILE 2>&1
 
 #Run monoecid as selected user
@@ -167,7 +168,7 @@ decho "Setting up sentinel"
 echo 'Downloading sentinel...'
 #Install Sentinel
 git clone https://github.com/monacocoin-net/sentinel.git /home/$whoami/sentinel >> $LOG_FILE 2>&1
-sudo chown -R $whoami:$whoami /home/$whoami/sentinel >> $LOG_FILE 2>&1
+chown -R $whoami:$whoami /home/$whoami/sentinel >> $LOG_FILE 2>&1
 
 cd /home/$whoami/sentinel
 echo 'Setting up dependencies...'
