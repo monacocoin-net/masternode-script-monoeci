@@ -8,7 +8,7 @@ The script has been tested for the following VPS provider :
 | :---: | :---: |
 | OVH  | OK |
 | Scaleway  | OK |
-| Digitalocean | Not tested |
+| DigitalOcean | OK |
 | Vultr  | OK |
 
 VPS provider are configuring Linux core in their own way that can cause error in script. Please reports if you test it on another provider listed above.
