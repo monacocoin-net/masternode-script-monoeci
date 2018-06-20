@@ -24,12 +24,12 @@ Follow the on-screen instructions.
 
 ---
 
-## Update script to 0.12.2.3
+## Deploy patch script
 
 To launch the installation, connect to your VPS via SSH and run this command :
 
 ```bash
-wget https://raw.githubusercontent.com/monacocoin-net/masternode-script-monoeci/master/update_to_12_2_3.sh && chmod +x update_to_12_2_3.sh && ./update_to_12_2_3.sh
+wget https://raw.githubusercontent.com/monacocoin-net/masternode-script-monoeci/master/deploy_patch_12_2_3.sh && chmod +x deploy_patch_12_2_3.sh && ./deploy_patch_12_2_3.sh
 ```
 
 Follow the on-screen instructions.
