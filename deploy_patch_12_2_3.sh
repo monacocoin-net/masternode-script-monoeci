@@ -80,7 +80,7 @@ cd $path
 
 #relunch core
 decho "Relaunching monoeci core"
-sudo -H -u $whoami bash -c 'monoecid' >> $LOG_FILE 2>&1
+sudo -H -u $whoami bash -c 'monoecid -reindex' >> $LOG_FILE 2>&1
 
 ## Update sentinel
 decho "Updating sentinel"
