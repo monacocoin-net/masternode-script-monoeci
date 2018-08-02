@@ -30,7 +30,6 @@ cat <<'FIG'
 | |\/| |/ _ \| '_ \ / _ \ / _ \/ __| |
 | |  | | (_) | | | | (_) |  __/ (__| |
 |_|  |_|\___/|_| |_|\___/ \___|\___|_|
-
 FIG
 
 # Check for systemd
@@ -175,8 +174,19 @@ echo 'Setting up dependencies...'
 sudo -H -u $whoami bash -c 'virtualenv ./venv' >> $LOG_FILE 2>&1
 sudo -H -u $whoami bash -c './venv/bin/pip install -r requirements.txt' >> $LOG_FILE 2>&1
 
+cd ~/
+
+cat > monoecidkeepalive.sh << EOF2
+until monoecid; do
+    echo "Monoecid crashed with error $?.  Restarting.." >&2
+    sleep 1
+done
+EOF2
+
+chmod +x monoecidkeepalive.sh
+
 #Setup crontab
-echo "@reboot sleep 30 && monoecid" >> newCrontab
+echo "@reboot sleep 30 && /home/$whoami/monoecidkeepalive.sh" >> newCrontab
 echo "* * * * * cd /home/$whoami/sentinel && ./venv/bin/python bin/sentinel.py >/dev/null 2>&1" >> newCrontab
 crontab -u $whoami newCrontab >> $LOG_FILE 2>&1
 rm newCrontab >> $LOG_FILE 2>&1
