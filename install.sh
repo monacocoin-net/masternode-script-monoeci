@@ -174,7 +174,7 @@ echo 'Setting up dependencies...'
 sudo -H -u $whoami bash -c 'virtualenv ./venv' >> $LOG_FILE 2>&1
 sudo -H -u $whoami bash -c './venv/bin/pip install -r requirements.txt' >> $LOG_FILE 2>&1
 
-cd ~/
+cd /home/$whoami/
 
 cat > monoecidkeepalive.sh << EOF2
 until monoecid; do
