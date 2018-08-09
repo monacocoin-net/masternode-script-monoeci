@@ -174,9 +174,8 @@ echo 'Setting up dependencies...'
 sudo -H -u $whoami bash -c 'virtualenv ./venv' >> $LOG_FILE 2>&1
 sudo -H -u $whoami bash -c './venv/bin/pip install -r requirements.txt' >> $LOG_FILE 2>&1
 
-cd ~/
-
-cat > monoecidkeepalive.sh << EOF2
+#Deploy script to keep daemon alive
+cat > /home/$whoami/monoecidkeepalive.sh << EOF2
 until monoecid; do
     echo "Monoecid crashed with error $?.  Restarting.." >&2
     sleep 1
@@ -184,6 +183,7 @@ done
 EOF2
 
 chmod +x monoecidkeepalive.sh
+chown $whoami:$whoami /home/$whoami/monoecidkeepalive.sh
 
 #Setup crontab
 echo "@reboot sleep 30 && /home/$whoami/monoecidkeepalive.sh" >> newCrontab
