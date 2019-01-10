@@ -53,10 +53,10 @@ sleep 5
 decho "Downloading new core and installing it"
 wget https://github.com/monacocoin-net/monoeci-core/releases/download/v0.12.2.3/monoeciCore-0.12.2.3-linux64.tar.gz >> $LOG_FILE 2>&1
 sudo tar xvf monoeciCore-0.12.2.3-linux64.tar.gz >> $LOG_FILE 2>&1
-sudo cp monoeciCore-0.12.2/bin/monoecid /usr/bin/ >> $LOG_FILE 2>&1
-sudo cp monoeciCore-0.12.2/bin/monoeci-cli /usr/bin/ >> $LOG_FILE 2>&1
-sudo cp monoeciCore-0.12.2/bin/monoeci-tx /usr/bin/ >> $LOG_FILE 2>&1
-rm -rf monoeciCore-0.12.2 >> $LOG_FILE 2>&1
+sudo cp monoecid /usr/bin/ >> $LOG_FILE 2>&1
+sudo cp monoeci-cli /usr/bin/ >> $LOG_FILE 2>&1
+sudo cp monoeci-tx /usr/bin/ >> $LOG_FILE 2>&1
+rm monoeciCore-0.12.2.3-linux64.tar.gz monoecid monoeci-cli monoeci-tx >> $LOG_FILE 2>&1
 
 ## Backup configuration
 decho "Backup configuration file"
